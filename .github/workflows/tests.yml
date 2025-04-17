@@ -1,0 +1,17 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++ make libboost-all-dev
+    - name: Run tests
+      run: |
+        make ci
+        python3 -m unittest tests/e2e_test.py
